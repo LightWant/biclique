@@ -1,0 +1,10 @@
+data/dblp-author/dblp.txt 
+graph size:n1: 1953085 n2:5624219, m 12282059
+load graph
+bcAndPivot bar 1000
+exact:1931704
+sample:21381
+maxDDD:1386
+done
+exact done, 7.43000s, ans 6307565
+time:7544ms

@@ -1,0 +1,9 @@
+data/bookcrossing_rating/bookcrossing.txt 
+graph size:n1: 77802 n2:185955, m 433652
+load graph
+maxDDD:8524
+1-1:433652
+1-2:76312154
+2-1:4632429
+2-2:1457330
+time:1341ms

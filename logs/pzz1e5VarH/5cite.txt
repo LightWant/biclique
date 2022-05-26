@@ -1,0 +1,27 @@
+data/komarix-citeseer/citeseer.txt 
+graph size:n1: 105353 n2:181395, m 512267
+load graph
+bar 1000
+sample size 100000
+exact:105192
+sample:161
+exact done, 0.16000s
+v2 maxDu:286 maxDv:385
+H:5
+T:100000
+start dp first
+dp fitsrt 0.00s
+maxPlen 5
+sumW:115057 sumW:183508 sumW:182603 sumW:122747 
+
+2-2: 1005817
+2-3: 4336351
+2-4: 31565776
+3-2: 333127
+3-3: 537064
+3-4: 1843591
+4-2: 245628
+4-3: 171935
+4-4: 239996
+appro done, 0.24000s
+time:406ms

@@ -1,0 +1,26 @@
+data/dbpedia-recordlabel/dbpedia.txt 
+graph size:n1: 168268 n2:18421, m 233286
+cost:24113704359805561918904783077376.00 6571.82, du 284, dv 10
+swap
+load graph
+bcAndPivot bar 1000
+sample size 100000
+exact:18123
+sample:298
+collect 2
+maxDegree of H 11
+ans 0.00
+exact done, 0.00000s, ans 0
+v2 maxDu:7446 maxDv:33
+H=min(p,q):3
+T:100000
+start dp first
+dp fitsrt 0.28s
+maxPlen 3
+sumW:494041 
+
+3-25: 34869840595762544640
+appro done, 1.29000s, ans 34869840595762544640
+realV 35120890226596118528.000000
+error: 0.007148
+time:1299ms

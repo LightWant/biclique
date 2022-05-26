@@ -1,0 +1,26 @@
+data/dblp-author/dblp.txt 
+graph size:n1: 1953085 n2:5624219, m 12282059
+cost:6232538611615866880.00 86247607392.62, du 4574, dv 729
+swap
+load graph
+bcAndPivot bar 1000
+sample size 100000
+exact:5623938
+sample:281
+collect 2
+maxDegree of H 32
+ans 5764215.00
+exact done, 2.77000s, ans 5764215
+v2 maxDu:287 maxDv:1386
+H=min(p,q):5
+T:100000
+start dp first
+dp fitsrt 0.01s
+maxPlen 5
+sumW:121909351 
+
+5-6: 307894513
+appro done, 0.17000s, ans 307894513
+realV 307915783.000000
+error: 0.000069
+time:2987ms

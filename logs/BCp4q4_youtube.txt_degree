@@ -1,0 +1,11 @@
+../data/youtube-groupmemberships/youtube.txt 
+graph size:n1: 94238 n2:30087, m 293360
+load graph
+cost:3266119792.24 2037675392.26, du 65437, dv 13442
+swap
+costEstimate 17 ms
+2-2 clique 161140899779
+collect 2
+maxDegree of H 169
+ans 626892852.00
+time:15795ms

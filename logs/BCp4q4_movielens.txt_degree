@@ -1,0 +1,3 @@
+../data/movielens-10m_rating/movielens.txt 
+graph size:n1: 1800441 n2:1811799, m 6240886
+load graph

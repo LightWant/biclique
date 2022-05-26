@@ -1,0 +1,11 @@
+../data/dbpedia-recordlabel/dbpedia.txt 
+graph size:n1: 168268 n2:18421, m 233286
+load graph
+cost:302972639.76 1776607.61, du 137494, dv 932
+swap
+costEstimate 40 ms
+2-2 clique 5787131198
+collect 2
+maxDegree of H 33
+ans 20508.00
+time:129ms

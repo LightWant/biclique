@@ -1,0 +1,21 @@
+data/komarix-citeseer/citeseer.txt 
+graph size:n1: 105353 n2:181395, m 512267
+load graph
+maxDu:286 maxDv:385
+H:5
+T:100000
+start dp first
+dp fitsrt 0.14s
+maxPlen 5
+sumW:1005817 sumW:645215 sumW:359760 sumW:178352 
+
+2-2: 1005817
+2-3: 4333841
+2-4: 31521412
+3-2: 333453
+3-3: 537217
+3-4: 1847131
+4-2: 245903
+4-3: 171828
+4-4: 239584
+time:491ms

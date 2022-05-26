@@ -1,0 +1,10 @@
+../data/komarix-imdb/imdb.txt 
+graph size:n1: 685568 n2:186414, m 2715604
+load graph
+cost:7259374512.43 13752754996.82, du 373655, dv 154612
+costEstimate 60 ms
+2-2 clique 1903842964
+collect 2
+maxDegree of H 226
+ans 303785503.00
+time:3873ms

@@ -1,0 +1,10 @@
+data/munmun_twitterex_ut/mummun.txt 
+graph size:n1: 175214 n2:530418, m 1890661
+load graph
+bcAndPivot bar 1000
+exact:95872
+sample:79342
+maxDDD:19805
+done
+exact done, 4.22000s, ans 222702046
+time:4236ms

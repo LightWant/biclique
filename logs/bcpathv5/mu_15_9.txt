@@ -1,0 +1,29 @@
+data/munmun_twitterex_ut/mummun.txt 
+graph size:n1: 175214 n2:530418, m 1890661
+cost:1087822661725455756897802833100800.00 93233586.55, du 1319, dv 562
+swap
+load graph
+bcAndPivot bar 1000
+sample size 100000
+exact:517050
+sample:13368
+collect 2
+maxDegree of H 94
+ans 0.00
+exact done, 0.20000s, ans 0
+H:10
+T:100000
+maxE 39610, maxDuv 19805
+start dp first v5
+first dp time 1.180000
+maxPlen 10
+
+sumW 1051678073891994624 
+
+second dp time 2.810000
+9-15: 0
+ed
+appro done, 2.89000s, ans 0
+realV 133327258987865056.000000
+error: 1.000000
+time:3102ms

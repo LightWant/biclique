@@ -1,0 +1,10 @@
+../data/bookcrossing_rating/bookcrossing.txt 
+graph size:n1: 77802 n2:185955, m 433652
+load graph
+cost:2985019246.78 3097157739.22, du 27675, dv 114845
+costEstimate 18 ms
+2-2 clique 1242856216
+collect 2
+maxDegree of H 103
+ans 547345.00
+time:536ms

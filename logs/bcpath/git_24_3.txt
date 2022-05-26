@@ -1,0 +1,26 @@
+data/github/github.txt 
+graph size:n1: 56519 n2:120867, m 440237
+cost:787207104136506891539747934289986801386476081981808013801617465922500372338172755968.00 127365.23, du 33725, dv 227
+swap
+load graph
+bcAndPivot bar 1000
+sample size 100000
+exact:115573
+sample:5294
+collect 2
+maxDegree of H 113
+ans 0.00
+exact done, 0.08000s, ans 0
+v2 maxDu:3675 maxDv:884
+H=min(p,q):3
+T:100000
+start dp first
+dp fitsrt 7.79s
+maxPlen 3
+sumW:-nan 
+
+3-24: 0
+appro done, 7.81000s, ans 0
+realV 81092696304064620307988874698900809711616.000000
+error: 1.000000
+time:7893ms

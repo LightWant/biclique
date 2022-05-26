@@ -1,0 +1,28 @@
+data/github/github.txt 
+graph size:n1: 56519 n2:120867, m 440237
+core reduction time:45ms
+n1 n2 m:12324 12638 266049
+cost:708619148543440.62 6355372457511.14, du 16271, dv 6002
+swap
+costEstimate 47 ms
+load graph
+2-2 clique 188951936072
+collect 2
+maxDegree of H 557
+ans 9167446801.00
+time:376423ms
+data/github/github.txt 
+graph size:n1: 56519 n2:120867, m 440237
+core reduction time:45ms
+n1 n2 m:12324 12638 266049
+cost:708619148543440.62 6355372457511.14, du 16271, dv 6002
+swap
+costEstimate 47 ms
+load graph
+2-2 clique 188951936072
+collect 2
+maxDegree of H 557
+0, 0
+1, 5952
+ans 9167446801.00
+time:303954ms

@@ -1,0 +1,24 @@
+data/dbpedia-recordlabel/dbpedia.txt 
+graph size:n1: 168268 n2:18421, m 233286
+load graph
+H:5
+T:100000
+maxE 7447, maxDuv 7446
+start dp first v5
+first dp time 2hop 0.650000
+maxPlen 5
+
+sumW 2:1751228 3:4925038 4:2929577 
+
+second dp time 2.710000
+2-2: 1086886
+2-3: 41302
+2-4: 11001
+3-2: 67922106
+3-3: 241636
+3-4: 8995
+4-2: 5786815329
+4-3: 2666834
+4-4: 19432
+ed
+time:2722ms

@@ -1,0 +1,25 @@
+data/stackexchange-stackoverflow/stackoverflow.txt 
+graph size:n1: 545195 n2:96678, m 1301942
+cost:29599.73 53203242465615031849063016189795407782738095003129435510306950907741198450950144.00, du 45, dv 5722
+load graph
+bcAndPivot bar 1000
+sample size 100000
+exact:534073
+sample:11122
+collect 2
+maxDegree of H 40
+ans 0.00
+exact done, 0.57000s, ans 0
+v2 maxDu:4917 maxDv:6119
+H=min(p,q):4
+T:100000
+start dp first
+dp fitsrt 4.23s
+maxPlen 4
+sumW:5089227575 
+
+4-30: 996035034078606297923584
+appro done, 8.67000s, ans 996035034078606297923584
+realV 876690585016623391834112.000000
+error: 0.136131
+time:9243ms

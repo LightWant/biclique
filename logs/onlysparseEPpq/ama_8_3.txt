@@ -1,0 +1,10 @@
+data/amazon-ratings/ama.txt 
+graph size:n1: 2146057 n2:1230915, m 5743258
+load graph
+bcAndPivot bar 1000
+exact:2109506
+sample:36551
+maxDDD:12180
+done
+exact done, 15.54000s, ans 124782192605
+time:15569ms

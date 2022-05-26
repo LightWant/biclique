@@ -1,0 +1,29 @@
+data/amazon-ratings/ama.txt 
+graph size:n1: 2146057 n2:1230915, m 5743258
+cost:29204990111428871998424798593406792668189496947370885120.00 102392.93, du 5033, dv 17
+swap
+load graph
+bcAndPivot bar 1000
+sample size 100000
+exact:1178653
+sample:52262
+collect 2
+maxDegree of H 13
+ans 0.00
+exact done, 1.65000s, ans 0
+H:6
+T:100000
+maxE 15212, maxDuv 12180
+start dp first v5
+first dp time 4.570000
+maxPlen 6
+
+sumW 123107381621 
+
+second dp time 9.520000
+5-35: 80112275954624479232
+ed
+appro done, 9.82000s, ans 80112275954624479232
+realV 56495871226790690816.000000
+error: 0.418020
+time:11494ms

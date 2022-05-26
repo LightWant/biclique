@@ -1,0 +1,10 @@
+../data/komarix-citeseer/citeseer.txt 
+graph size:n1: 105353 n2:181395, m 512267
+load graph
+cost:2251493.15 1227235742.46, du 9560, dv 101601
+costEstimate 6 ms
+2-2 clique 31561033
+collect 2
+maxDegree of H 16
+ans 239673.00
+time:56ms

@@ -1,0 +1,10 @@
+data/github/github.txt 
+graph size:n1: 56519 n2:120867, m 440237
+load graph
+bcAndPivot bar 1000
+exact:48294
+sample:8225
+maxDDD:3675
+done
+exact done, 0.40000s, ans 136393931
+time:402ms

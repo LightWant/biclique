@@ -1,0 +1,1 @@
+g++    -fopenmp -std=c++11 -march=native -mavx -O3   CMakeFiles/run.dir/runner/run.cpp.o  -o run biClique/libBCListPlusPlus.a biClique/libBK.a biClique/librawEdgePivot.a biClique/libfastEdgePivot.a biClique/libedgePivotSpecificPQ.a biClique/libcolorPath.a biClique/libpivotAndPath.a 

@@ -1,0 +1,25 @@
+data/actor2/actor2.txt 
+graph size:n1: 303617 n2:896302, m 3782463
+cost:15355802.17 14244523627145662119620378624.00, du 17, dv 1044
+load graph
+bcAndPivot bar 1000
+sample size 100000
+exact:228715
+sample:74902
+collect 2
+maxDegree of H 33
+ans 0.00
+exact done, 0.52000s, ans 0
+v2 maxDu:1334 maxDv:1590
+H=min(p,q):8
+T:100000
+start dp first
+dp fitsrt 5.59s
+maxPlen 8
+sumW:15764522674334 
+
+8-22: 324130110500837
+appro done, 11.33000s, ans 324130110500837
+realV 441982707782049.000000
+error: 0.266645
+time:11863ms

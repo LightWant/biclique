@@ -1,0 +1,20 @@
+data/stackexchange-stackoverflow/stackoverflow.txt 
+graph size:n1: 545195 n2:96678, m 1301942
+load graph
+maxDu:4917 maxDv:6119
+H:5
+start dp first
+dp fitsrt 7.25s
+maxPlen 5
+sumW:18293548 sumW:285023876 sumW:3077562147 sumW:21292384971 
+
+2-2: 18293548
+2-3: 874087746
+2-4: 114831732446
+3-2: 139409807
+3-3: 122780227
+3-4: 2127704765
+4-2: 15219749841
+4-3: 113959200
+4-4: 211011780
+time:19358ms

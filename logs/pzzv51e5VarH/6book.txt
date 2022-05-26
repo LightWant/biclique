@@ -1,0 +1,37 @@
+data/bookcrossing_rating/bookcrossing.txt 
+graph size:n1: 77802 n2:185955, m 433652
+load graph
+bar 1000
+sample size 100000
+exact:75459
+sample:2343
+exact done, 0.54000s
+H:6
+T:100000
+maxE 17048, maxDuv 8524
+start dp first v5
+first dp time 0.080000
+maxPlen 6
+
+sumW 2:781813 3:4109101 4:17364876 5:65109665 
+
+second dp time 6.440000
+2-2: 1457330
+2-3: 22950232
+2-4: 1240865999
+2-5: 75969377243
+3-2: 1993905
+3-3: 783431
+3-4: 2093172
+3-5: 15211127
+4-2: 14557477
+4-3: 2563887
+4-4: 556620
+4-5: 342334
+5-2: 144808507
+5-3: 20215873
+5-4: 2294981
+5-5: 112607
+ed
+appro done, 6.46000s
+time:7000ms

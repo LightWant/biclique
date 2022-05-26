@@ -1,0 +1,10 @@
+../data/amazon-ratings/ama.txt 
+graph size:n1: 2146057 n2:1230915, m 5743258
+load graph
+cost:0.00 0.00, du 0, dv 0
+costEstimate 3 ms
+2-2 clique 23264456352
+collect 2
+maxDegree of H 565
+ans 201490496.00
+time:158189ms

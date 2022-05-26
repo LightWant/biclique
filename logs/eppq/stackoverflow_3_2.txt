@@ -1,0 +1,11 @@
+data/stackexchange-stackoverflow/stackoverflow.txt 
+graph size:n1: 545195 n2:96678, m 1301942
+load graph
+maxDDD:6119
+1-1:1301942
+1-2:52863485
+2-1:152726095
+2-2:18293548
+3-1:131730526346
+3-2:139360413
+time:46283ms

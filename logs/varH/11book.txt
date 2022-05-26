@@ -1,0 +1,12 @@
+data/bookcrossing_rating/bookcrossing.txt 
+graph size:n1: 77802 n2:185955, m 433652
+load graph
+maxDu:8524 maxDv:707
+H:11
+T:100000
+start dp first
+dp fitsrt 0.43s
+maxPlen 11
+sumW:1457330 sumW:2251215 sumW:3232371 sumW:3310684 sumW:1517605 sumW:237191 sumW:21572 sumW:1307 sumW:8 sumW:0 
+
+10 225000 18 8

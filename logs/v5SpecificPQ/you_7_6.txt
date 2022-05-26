@@ -1,0 +1,26 @@
+data/youtube-groupmemberships/youtube.txt 
+graph size:n1: 94238 n2:30087, m 293360
+cost:203581540537120.75 45810471479.20, du 1389, dv 495
+swap
+load graph
+bcAndPivot bar 0
+sample size 100000
+exact:0
+sample:30087
+exact done, 0.00000s, ans 0
+H:7
+T:100000
+maxE 15182, maxDuv 7591
+start dp first v5
+first dp time 0.220000
+maxPlen 7
+
+sumW 2602406528065 
+
+second dp time 0.700000
+6-7: 2064847618
+ed
+appro done, 0.70000s, ans 2064847618
+realV 1764719579.000000
+error: 0.170071
+time:712ms

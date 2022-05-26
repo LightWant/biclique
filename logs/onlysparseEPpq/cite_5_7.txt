@@ -1,0 +1,10 @@
+data/komarix-citeseer/citeseer.txt 
+graph size:n1: 105353 n2:181395, m 512267
+load graph
+bcAndPivot bar 1000
+exact:105192
+sample:161
+maxDDD:385
+done
+exact done, 0.22000s, ans 14760
+time:216ms

@@ -1,0 +1,13 @@
+data/actor2/actor2.txt 
+graph size:n1: 303617 n2:896302, m 3782463
+core reduction time:399ms
+n1 n2 m:188750 156556 2635078
+cost:1955106122480750.25 143733245917416.34, du 8965, dv 6684
+swap
+costEstimate 407 ms
+load graph
+2-2 clique 3731240620
+collect 2
+maxDegree of H 294
+ans 1385664812.00
+time:20423ms

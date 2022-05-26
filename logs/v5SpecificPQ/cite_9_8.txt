@@ -1,0 +1,26 @@
+data/komarix-citeseer/citeseer.txt 
+graph size:n1: 105353 n2:181395, m 512267
+cost:115561990394.70 57598.41, du 95, dv 3
+swap
+load graph
+bcAndPivot bar 0
+sample size 100000
+exact:0
+sample:181395
+exact done, 0.00000s, ans 0
+H:9
+T:100000
+maxE 770, maxDuv 385
+start dp first v5
+first dp time 0.220000
+maxPlen 9
+
+sumW 1844 
+
+second dp time 0.510000
+8-9: 1
+ed
+appro done, 0.53000s, ans 1
+realV 1.000000
+error: 0.026782
+time:528ms

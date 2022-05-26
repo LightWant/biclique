@@ -1,0 +1,10 @@
+data/komarix-imdb/imdb.txt 
+graph size:n1: 685568 n2:186414, m 2715604
+load graph
+bcAndPivot bar 1000
+exact:653782
+sample:31786
+maxDDD:1293
+done
+exact done, 3.17000s, ans 2530941
+time:3166ms

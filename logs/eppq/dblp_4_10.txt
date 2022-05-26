@@ -1,0 +1,4 @@
+data/dblp-author/dblp.txt 
+graph size:n1: 1953085 n2:5624219, m 12282059
+load graph
+maxDDD:1386

@@ -1,0 +1,4 @@
+data/livejournal-groupmemberships/livejournal.txt 
+graph size:n1: 3201203 n2:7489073, m 112307385
+load graph
+maxD:1053676

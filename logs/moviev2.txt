@@ -1,0 +1,9 @@
+data/movielens-10m_rating/movielens.txt 
+graph size:n1: 69878 n2:10677, m 10000054
+load graph
+core reduction
+69878 10577 9999954
+maxDu:7344 maxDv:34864
+H:11
+T:100000
+start dp first

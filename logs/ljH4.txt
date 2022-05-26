@@ -1,0 +1,6 @@
+data/livejournal-groupmemberships/livejournal.txt 
+graph size:n1: 3201203 n2:7489073, m 112307385
+load graph
+maxE 5446918, maxDuv 1053676
+start dp first v5
+run: /home/yexw/biclique/src/biClique/colorPathAV5.cpp:134: colorPath::approximateCountingAllVersion5(uint64_t)::__lambda0: Assertion `e2[e] < pL' failed.

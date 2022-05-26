@@ -1,0 +1,9 @@
+data/komarix-citeseer/citeseer.txt 
+graph size:n1: 105353 n2:181395, m 512267
+load graph
+maxDDD:385
+1-1:512267
+1-2:5916330
+2-1:684479
+2-2:1005817
+time:136ms

@@ -1,0 +1,11 @@
+data/dbpedia-recordlabel/dbpedia.txt 
+graph size:n1: 168268 n2:18421, m 233286
+load graph
+maxDDD:7446
+1-1:233286
+1-2:116061
+1-3:116291
+2-1:144765229
+2-2:1086886
+2-3:41719
+time:1499ms

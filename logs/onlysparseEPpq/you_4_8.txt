@@ -1,0 +1,10 @@
+data/youtube-groupmemberships/youtube.txt 
+graph size:n1: 94238 n2:30087, m 293360
+load graph
+bcAndPivot bar 1000
+exact:85890
+sample:8348
+maxDDD:7591
+done
+exact done, 0.90000s, ans 678
+time:906ms

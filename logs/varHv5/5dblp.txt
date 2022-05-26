@@ -1,0 +1,24 @@
+data/dblp-author/dblp.txt 
+graph size:n1: 1953085 n2:5624219, m 12282059
+load graph
+H:5
+T:100000
+maxE 2772, maxDuv 1386
+start dp first v5
+first dp time 2hop 2.760000
+maxPlen 5
+
+sumW 2:27239010 3:44515974 4:79057462 
+
+second dp time 7.990000
+2-2: 31673959
+2-3: 334517562
+2-4: 8648045509
+3-2: 14026192
+3-3: 27551084
+3-4: 211864376
+4-2: 271676356
+4-3: 12537541
+4-4: 35195029
+ed
+time:8577ms

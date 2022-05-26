@@ -1,0 +1,27 @@
+data/dblp-author/dblp.txt 
+graph size:n1: 1953085 n2:5624219, m 12282059
+load graph
+bar 1000
+sample size 100000
+exact:1931704
+sample:21381
+exact done, 7.07000s
+v2 maxDu:1386 maxDv:287
+H:5
+T:100000
+start dp first
+dp fitsrt 2.13s
+maxPlen 5
+sumW:15293448 sumW:24850161 sumW:40484127 sumW:136664049 
+
+2-2: 31673959
+2-3: 334794816
+2-4: 8652410533
+3-2: 14025743
+3-3: 27537943
+3-4: 211571613
+4-2: 271572615
+4-3: 12538843
+4-4: 35241647
+appro done, 6.59000s
+time:13767ms

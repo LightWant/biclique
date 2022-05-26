@@ -1,0 +1,10 @@
+data/dblp-author/dblp.txt 
+graph size:n1: 1953085 n2:5624219, m 12282059
+load graph
+cost:449156309061265.69 90295436595806240.00, du 184977, dv 2605843
+costEstimate 322 ms
+2-2 clique -156427631
+collect 2
+maxDegree of H 41
+ans 35212071.00
+time:3886ms

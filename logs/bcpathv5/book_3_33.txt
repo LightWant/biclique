@@ -1,0 +1,28 @@
+data/bookcrossing_rating/bookcrossing.txt 
+graph size:n1: 77802 n2:185955, m 433652
+cost:798.99 7602589335740823669166323243071664122591444992.00, du 2, dv 1365
+load graph
+bcAndPivot bar 1000
+sample size 100000
+exact:75459
+sample:2343
+collect 2
+maxDegree of H 5
+ans 0.00
+exact done, 0.02000s, ans 0
+H:4
+T:100000
+maxE 17048, maxDuv 8524
+start dp first v5
+first dp time 0.070000
+maxPlen 4
+
+sumW 4109101 
+
+second dp time 0.400000
+3-33: 3512451596845383168
+ed
+appro done, 0.42000s, ans 3512451596845383168
+realV 3611015070729359360.000000
+error: 0.027295
+time:444ms

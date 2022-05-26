@@ -1,0 +1,9 @@
+data/github/github.txt 
+graph size:n1: 56519 n2:120867, m 440237
+load graph
+costEstimate 0 ms
+2-2 clique 196828334631
+collect 2
+maxDegree of H 567
+ans 9167446801.00
+time:337662ms

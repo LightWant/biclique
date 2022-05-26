@@ -1,0 +1,10 @@
+data/stackexchange-stackoverflow/stackoverflow.txt 
+graph size:n1: 545195 n2:96678, m 1301942
+load graph
+bcAndPivot bar 1000
+exact:534073
+sample:11122
+maxDDD:6119
+done
+exact done, 4.39000s, ans 135857273
+time:4397ms

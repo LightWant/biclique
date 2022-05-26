@@ -1,0 +1,27 @@
+data/github/github.txt 
+graph size:n1: 56519 n2:120867, m 440237
+load graph
+bar 1000
+sample size 100000
+exact:48294
+sample:8225
+exact done, 0.56000s
+v2 maxDu:884 maxDv:3675
+H:5
+T:100000
+start dp first
+dp fitsrt 7.60s
+maxPlen 5
+sumW:50358571 sumW:2977326612 sumW:95032797625 sumW:1879758836581 
+
+2-2: 50894505
+2-3: 304514279
+2-4: 4218182514
+3-2: 2035194062
+3-3: 1320168498
+3-4: 2285800316
+4-2: 196693405677
+4-3: 29772074552
+4-4: 9205289533
+appro done, 17.72000s
+time:18287ms

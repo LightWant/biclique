@@ -1,0 +1,29 @@
+data/komarix-imdb/imdb.txt 
+graph size:n1: 685568 n2:186414, m 2715604
+cost:1456799942393525268319836310028001304898317641254117534842410569702803020709888.00 98354.63, du 1944, dv 4
+swap
+load graph
+bcAndPivot bar 1000
+sample size 100000
+exact:141350
+sample:45064
+collect 2
+maxDegree of H 5
+ans 0.00
+exact done, 0.27000s, ans 0
+H:6
+T:100000
+maxE 2995, maxDuv 1293
+start dp first v5
+first dp time 1.530000
+maxPlen 6
+
+sumW 16846729389 
+
+second dp time 3.220000
+5-47: 41392441772
+ed
+appro done, 3.31000s, ans 41392441772
+realV 43185618841.000000
+error: 0.041523
+time:3581ms

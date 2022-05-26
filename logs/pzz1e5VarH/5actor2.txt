@@ -1,0 +1,27 @@
+data/actor2/actor2.txt 
+graph size:n1: 303617 n2:896302, m 3782463
+load graph
+bar 1000
+sample size 100000
+exact:228715
+sample:74902
+exact done, 5.11000s
+v2 maxDu:1334 maxDv:1590
+H:5
+T:100000
+start dp first
+dp fitsrt 5.37s
+maxPlen 5
+sumW:19407460 sumW:159817184 sumW:2892540389 sumW:42250119091 
+
+2-2: 23017846
+2-3: 60981673
+2-4: 1058391117
+3-2: 159281152
+3-3: 109832510
+3-4: 946440405
+4-2: 4563569344
+4-3: 426520404
+4-4: 1387096339
+appro done, 12.97000s
+time:18095ms

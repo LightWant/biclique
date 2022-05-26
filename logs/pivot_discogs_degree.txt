@@ -1,0 +1,4 @@
+data/discogs_affiliation/discogs.txt 
+graph size:n1: 1754823 n2:270771, m 5302276
+load graph
+maxD:93257
