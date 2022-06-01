@@ -1627,7 +1627,8 @@ printf("dp first %.2fs\n", (clock() - st) / CLOCKS_PER_SEC);
     }
     printf("\n\n");fflush(stdout);
     
-    std::default_random_engine generator;
+    std::random_device rd;
+    std::default_random_engine generator(rd());
     std::uniform_real_distribution<double> uiDistribution(0, 1);
     std::vector<int> stackL(g->maxDv+1), stackR(g->maxDu+1);
     std::vector<double> sumCXi(g->maxDu + 5), sumCYi(g->maxDv + 5);
@@ -2236,7 +2237,7 @@ printf("start dp first v3\n");fflush(stdout);
     }
     printf("\n\n");fflush(stdout);
     
-    std::default_random_engine generator;
+    std::default_random_engine generator(1000);
     std::uniform_real_distribution<double> uiDistribution(0, 1);
     std::vector<int> stackL(g->maxDv+1), stackR(g->maxDu+1);
     std::vector<double> sumCXi(g->maxDu), sumCYi(g->maxDv);
@@ -2526,7 +2527,7 @@ printf("start dp first v3\n");fflush(stdout);
     for(int x = 2; x < (int)ansAll.size() && x < minPQ; x++) {
         for(int y = 2; y < (int)ansAll[x].size() && y < minPQ; y++) {
             if(ansAll[x][y] < 0.5) break;
-            printf("%d-%d: %.0f\n", x, y, ansAll[x][y]);
+            printf("%d-%d: %.8f\n", x, y, ansAll[x][y]);
         }
     }
     fflush(stdout);

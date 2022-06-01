@@ -329,7 +329,8 @@ printf("dp fitsrt %.2fs\n", (clock() - st) / CLOCKS_PER_SEC);
     }
     printf("\n\n");fflush(stdout);
     
-    std::default_random_engine generator;
+    std::random_device rd;
+    std::default_random_engine generator(rd());
     std::uniform_real_distribution<double> uiDistribution(0, 1);
     std::vector<int> stackL(g->maxDv+1), stackR(g->maxDu+1);
     std::vector<double> sumCXi(g->maxDu + 5), sumCYi(g->maxDv + 5);

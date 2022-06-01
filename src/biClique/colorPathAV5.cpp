@@ -415,7 +415,8 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
     }
     printf("\n\n");fflush(stdout);
     
-    std::default_random_engine generator;
+    std::random_device rd;
+    std::default_random_engine generator(rd());
     std::uniform_real_distribution<double> uiDistribution(0, 1);
     std::vector<int> stackL(minPQ + 5), stackR(minPQ + 5);
     std::vector<double> sumCXi(g->maxDu + 5), sumCYi(g->n1 + 1);
