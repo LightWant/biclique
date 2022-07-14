@@ -1,4 +1,0 @@
-data/amazon-ratings/ama.txt 
-graph size:n1: 2146057 n2:1230915, m 5743258
-load graph
-maxDDD:12180

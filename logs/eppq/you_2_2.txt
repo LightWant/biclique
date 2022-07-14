@@ -1,9 +1,0 @@
-data/youtube-groupmemberships/youtube.txt 
-graph size:n1: 94238 n2:30087, m 293360
-load graph
-maxDDD:7591
-1-1:293360
-1-2:3785745
-2-1:66399082
-2-2:12540261
-time:10520ms

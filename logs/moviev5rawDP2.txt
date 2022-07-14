@@ -1,7 +1,0 @@
-data/movielens-10m_rating/movielens.txt 
-graph size:n1: 69878 n2:10677, m 10000054
-load graph
-H:11
-T:100000
-maxE 1314868, maxDuv 34864
-start dp first v5

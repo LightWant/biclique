@@ -1,4 +1,0 @@
-data/flickr-groupmemberships/flickr.txt 
-graph size:n1: 395979 n2:103631, m 8545307
-load graph
-maxD:34989

@@ -1,4 +1,0 @@
-data/komarix-imdb/imdb.txt 
-graph size:n1: 685568 n2:186414, m 2715604
-load graph
-maxDDD:1293

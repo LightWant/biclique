@@ -1,8 +1,0 @@
-../data/munmun_twitterex_ut/mummun.txt 
-graph size:n1: 175214 n2:530418, m 1890661
-load graph
-cost:0.00 0.00, du 0, dv 0
-costEstimate 1 ms
-2-2 clique 455227621
-collect 2
-maxDegree of H 1972

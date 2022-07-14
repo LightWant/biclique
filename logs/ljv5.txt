@@ -1,7 +1,0 @@
-data/livejournal-groupmemberships/livejournal.txt 
-graph size:n1: 3201203 n2:7489073, m 112307385
-load graph
-H:11
-T:100000
-maxE 5446918, maxDuv 1053676
-start dp first v5
