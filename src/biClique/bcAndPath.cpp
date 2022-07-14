@@ -252,6 +252,7 @@ printf("start dp first\n");fflush(stdout);
     };
 
     int maxPLen = 0;
+    
     std::vector<uint32_t> js(g->maxDu);
 double st = clock();
     for(auto u:nodes) {
@@ -345,7 +346,7 @@ printf("dp fitsrt %.2fs\n", (clock() - st) / CLOCKS_PER_SEC);
     std::vector<int> stackL(g->maxDv+1), stackR(g->maxDu+1);
     std::vector<double> sumCXi(g->maxDu + 5), sumCYi(g->maxDv + 5);
     double ansTmp = 0.0;
-    
+    uint32_t totalSampleSize = 0;
     if(sumW > 0)
     for(auto u:nodes) {
 // if(u > 106000) {
@@ -430,7 +431,7 @@ printf("dp fitsrt %.2fs\n", (clock() - st) / CLOCKS_PER_SEC);
 // }
 // assert(sampleSize <= T);
                 if(sampleSize == 0) continue;
-
+totalSampleSize += sampleSize;
                 std::fill(sumCXi.begin(), sumCXi.begin() + pR + 2, 0.0);
                 std::fill(sumCYi.begin(), sumCYi.begin() + pL + 2, 0.0);
 // printf("len %d: sumW:%.0f spSize:%llu\n", len, sumWtemp, sampleSize);
@@ -621,6 +622,7 @@ printf("dp fitsrt %.2fs\n", (clock() - st) / CLOCKS_PER_SEC);
     //     }
     // }
     // ans += ansTmp / C[std::max(p,q) - 1][minPQ - 1];
+printf("totalSZ:%u\n", totalSampleSize);
     ans += ansTmp;
     printf("%d-%d: %.0f\n", p, q, ans);
     fflush(stdout);
@@ -897,12 +899,15 @@ printf("l:%d pH:%d pS:%d\n", l, pH, pS);
 }
 
 void bcAndPath::collect2HopNeighbors() {
-    H.lists.resize(g->n1);
+printf("g n1 %u\n", g->n1);fflush(stdout);
+    H.lists.resize(g->n1 + 5);
 
-    std::vector<uint32_t> sum(g->n1);
-    std::vector<uint32_t> tmp(g->n1);
+    std::vector<uint32_t> sum(g->n1 + 5);
+    std::vector<uint32_t> tmp(g->n1 + 5);
     uint32_t l = 0;
 
+printf("connect 2-hop neighbors\n");
+fflush(stdout);
 // double twotwo = 0;
     for(uint32_t u = 0; u < g->n1; u++) {
         for(uint32_t i = g->pU[u]; i < g->pU[u + 1]; i++) {

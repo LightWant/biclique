@@ -423,6 +423,7 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
 
     std::vector<int> maxZL(g->maxDu + 1), maxZR(g->maxDv + 1);
 
+uint32_t totalSampleSizeReal = 0;
     // if(sumW > 0)
     for(uint32_t u = 0; u < g->n1; u++) {
 // if(u > 106000) {
@@ -753,6 +754,7 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
 // printf("CY\n");
 
             sampleSize = std::ceil(sumWtemp / sumW[len] * T);
+            totalSampleSizeReal += sampleSize;
             // sampleSize -= noUseT;
             // if(ansAll[len].size() < pR) ansAll[len].resize((pR + 2)*2);
 // if(len == 10) printf("there2 pr:%d x_len:%d sumCXi[0]:%.2f\n", pR, len, sumCXi[0]);
@@ -770,7 +772,9 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
         }
     }
 edT = clock();
-printf("second dp time %f\n", (edT - stT) / CLOCKS_PER_SEC);
+printf("second dp time ss %f\n", (edT - stT) / CLOCKS_PER_SEC);
+
+printf("totalSampleSize %u\n", totalSampleSizeReal);
 
     for(int x = 2; x < (int)ansAll.size() && x < minPQ; x++) {
         for(int y = 2; y < (int)ansAll[x].size() && y < minPQ; y++) {

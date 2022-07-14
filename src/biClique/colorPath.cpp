@@ -1139,7 +1139,6 @@ printf("start dp first\n");fflush(stdout);
                 candR.changeToByPos(i, i - 1);
             }
 
-
             // if(pL < minPQ - 1 || pR < minPQ - 1) continue;
 // printf("Graph: %u %u:\n", u, v);
             int maxPLength = computeDP(pL, pR);
@@ -1635,11 +1634,9 @@ printf("dp first %.2fs\n", (clock() - st) / CLOCKS_PER_SEC);
 
     std::vector<int> maxZL(g->maxDu + 1), maxZR(g->maxDv + 1);
 
+uint32_t totalSampleSizeReal = 0;
     // if(sumW > 0)
     for(uint32_t u = 0; u < g->n1; u++) {
-// if(u > 106000) {
-    // printf("u:%u\n", u);fflush(stdout);
-// }
         int pR = 0;
         for(uint32_t i = g->pU[u]; i < g->pU[u + 1]; i++) {
             uint32_t v = g->e1[i];
@@ -1713,6 +1710,7 @@ printf("dp first %.2fs\n", (clock() - st) / CLOCKS_PER_SEC);
                 }
 
                 uint64_t sampleSize = std::ceil(T*sumWtemp / sumW[len - 1]);
+totalSampleSizeReal += sampleSize;
 // if(sampleSize > T) {
 //     printf("%d %llu %.0f %.0f\n", len, sampleSize, sumWtemp, sumW[len - 1]);
 //     fflush(stdout);
@@ -1873,6 +1871,8 @@ printf("dp first %.2fs\n", (clock() - st) / CLOCKS_PER_SEC);
                 sampleSize = std::ceil(T * sumWtemp / sumW[len - 1]);
                 // if(ansAll[len].size() < pR) ansAll[len].resize((pR + 2)*2);
 
+
+
                 for(int x = 0; x + len <= pR + 1 && x + len < minPQ; x++) {
                     if(sumCXi[x] < 0.5) break;
                     ansAll[len][len + x] += sumCXi[x] * sumWtemp / sampleSize / C[len + x - 1][len - 1];
@@ -1886,7 +1886,7 @@ printf("dp first %.2fs\n", (clock() - st) / CLOCKS_PER_SEC);
             }
         }
     }
-
+printf("totalSampleSize Round %u\n", totalSampleSizeReal);
     for(int x = 2; x < (int)ansAll.size() && x < minPQ; x++) {
         for(int y = 2; y < (int)ansAll[x].size() && y < minPQ; y++) {
             if(ansAll[x][y] < 0.5) break;

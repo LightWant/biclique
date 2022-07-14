@@ -13,7 +13,7 @@
 class rawEdgePivot {
 private:
     const int maxD = 1100000;
-    const int maxD2 = 100;
+    const int maxD2 = 10;
 
     biGraph * g;
 
@@ -60,6 +60,37 @@ public:
         g = new biGraph(filePath);
         // g->coreReduction(2, 2);
         printf("load graph\n");fflush(stdout);
+
+        // {
+        //     uint32_t maxOutU = 0, maxOutV = 0, maxSum = 0;
+        //     uint32_t lBar = 50, rBar = 50;
+
+        //     for(uint32_t u = 0; u < g->n1; u++) {
+        //         for(uint32_t i = g->pU[u]; i < g->pU[u + 1]; i++) {
+        //             uint32_t v = g->e1[i];
+
+        //             // maxOutU = std::max(maxOutU, pU[u + 1] - i);
+        //             auto st = g->e2.begin() + g->pV[v];
+        //             auto ed = g->e2.begin() + g->pV[v + 1];
+        //             // maxOutV = std::max(uint32_t(ed - std::upper_bound(st, ed, u)), maxOutV);
+        //             // maxSum = std::max(
+        //             //     maxSum, 
+                        
+        //             //     g->pU[u + 1] - i + uint32_t(ed - std::upper_bound(st, ed, u))
+        //             // );
+        //             // printf("%u %u\n", g->pU[u + 1] - i, uint32_t(ed - std::upper_bound(st, ed, u)));
+        //             if(g->pU[u + 1] - i >= lBar && uint32_t(ed - std::upper_bound(st, ed, u)) >= rBar) {
+        //                 maxSum++;
+        //             }
+        //         }
+        //     }
+
+            // printf("maxOut: %u %u\n", maxOutU, maxOutV);
+            // printf("maxD: %u %u\n", maxDu, maxDv);
+            // printf("maxSum: %u\n", maxSum);
+            // fflush(stdout);
+        // }
+        // exit(0);
     }
     
     void exactCountMaximalPivot();

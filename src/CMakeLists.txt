@@ -28,9 +28,4 @@ target_link_libraries(${exName1} pivotAndPath)
 target_link_libraries(${exName1} turan)
 target_link_libraries(${exName1} bcAndPath)
 
-set(binPath "../bin")
-ADD_CUSTOM_COMMAND(TARGET ${exName1}
-          POST_BUILD
-          COMMAND ${CMAKE_COMMAND} -E make_directory ${binPath}
-          COMMAND ${CMAKE_COMMAND} -E copy ${exName1} ${binPath}/.
-)
+

@@ -43,7 +43,9 @@ double t = clock();
     if(vs1.size() > 0) pivot(vs1);
 double d = clock();
 
-printf("exact done, %.5fs\n", (d - t) / CLOCKS_PER_SEC);fflush(stdout);
+printf("exact done, %.5fs\n", (d - t) / CLOCKS_PER_SEC);
+printf(" 2-2, %.0f\n", ansAll[2][2]);
+fflush(stdout);
     if(vs2.size() > 0) sample2(vs2, T);
 double e = clock();
 

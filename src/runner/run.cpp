@@ -56,7 +56,7 @@ int main(int argc, char * argv[])
 
         delete counter;
     }
-    else if(aC->exist("-pm")) {
+    else if(aC->exist("-pm")) {//EPIvoter
         rawEdgePivot * counter = new rawEdgePivot(filePath, outFilePath);
 
         auto t1 = std::chrono::steady_clock::now();
@@ -120,7 +120,7 @@ int main(int argc, char * argv[])
         uint64_t T = 100000;
         if(aC->exist("-t")) T = atoll(aC->get("-t").c_str());
         // counter->approximateCountingAll(T);
-
+printf("herer ss\n");
         if(aC->exist("-v5"))
             counter->approximateCountingAllVersion5(T);
         else counter->approximateCountingAllVersion2(T);
@@ -153,7 +153,9 @@ int main(int argc, char * argv[])
         auto t1 = std::chrono::steady_clock::now();
         uint64_t T = 100000;
         if(aC->exist("-t")) T = atoll(aC->get("-t").c_str());
-        counter->sample(T);
+        double rho = 0.8;
+        if(aC->exist("-rho")) rho = atof(aC->get("-rho").c_str());
+        counter->sample(T, rho);
 
         auto t2 = std::chrono::steady_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
