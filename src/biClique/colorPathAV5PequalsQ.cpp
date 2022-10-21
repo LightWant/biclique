@@ -1,13 +1,13 @@
-#include "colorPath.h"
+#include "colorPathPequalsQ.h"
 #include <chrono>
 #include <random>
 #include <cassert>
 
-void colorPath::approximateCountingAllVersion5(uint64_t T) {
+void colorPathPequalsQ::approximateCountingAllVersion5(uint64_t T) {
     // g->coreReductionFast22();
 
     // printf("%u %u %llu\n", g->n1, g->n2, g->m);
-
+    printf("pequalsq_v5\n");
     uint32_t maxDuv = std::max(g->maxDu, g->maxDv);
 
     // const int minPQ = 5;
@@ -59,9 +59,9 @@ void colorPath::approximateCountingAllVersion5(uint64_t T) {
     }
 
     ansAll.resize(minPQ + 2);
-    for(uint32_t i = 0; i <= minPQ; i++) {
-        ansAll[i].resize(minPQ + 2);
-    }
+    // for(uint32_t i = 0; i <= minPQ; i++) {
+    //     ansAll[i].resize(minPQ + 2);
+    // }
 
     //(minPQ-minPQ)-bipath
     std::vector<double> sumW(minPQ + 2);
@@ -419,7 +419,7 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
     std::default_random_engine generator(rd());
     std::uniform_real_distribution<double> uiDistribution(0, 1);
     std::vector<int> stackL(minPQ + 5), stackR(minPQ + 5);
-    std::vector<double> sumCXi(g->maxDu + 5), sumCYi(g->n1 + 5);
+    std::vector<double> sumCXi(g->maxDu + 5), sumCYi(g->n1 + 1);
 
     std::vector<int> maxZL(g->maxDu + 1), maxZR(g->maxDv + 1);
 
@@ -552,8 +552,9 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
 
             if(sampleSize == 0) continue;
 
-            std::fill(sumCXi.begin(), sumCXi.begin() + pR + 2, 0.0);
-            std::fill(sumCYi.begin(), sumCYi.begin() + pL + 2, 0.0);
+            sumCXi[0] = 0.0;
+            // std::fill(sumCXi.begin(), sumCXi.begin() + pR + 2, 0.0);
+            // std::fill(sumCYi.begin(), sumCYi.begin() + pL + 2, 0.0);
 
             bool hit = false;
             // uint32_t noUseT = 0;
@@ -707,37 +708,38 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
                     // if(pR - j - 1 + rSize < maxPQ - minPQ) break;
                 }
 
-                for(int x = 0; x <= rSize && x < minPQ; x++) {
-                    sumCXi[x] += C[rSize][x];
-                }
+                // for(int x = 0; x <= rSize && x < minPQ; x++) {
+                //     sumCXi[x] += C[rSize][x];
+                // }
+                sumCXi[0] += C[rSize][0];
                 maxZR[len] = std::max(maxZR[len], rSize);
 // if(len == 10) {
 //     printf("there1\n");fflush(stdout);
 // }
-                int lSize = 0;
-                kk = 0;
-                for(int j = 0; j < pL; j++) {
-                    if(kk < len && stackL[kk] == j) {
-                        kk++;
-                        continue;
-                    }
+                // int lSize = 0;
+                // kk = 0;
+                // for(int j = 0; j < pL; j++) {
+                //     if(kk < len && stackL[kk] == j) {
+                //         kk++;
+                //         continue;
+                //     }
 
-                    int u = candL[j];
-                    bool f = true;
-                    for(int k = 0; k < len; k++) {
-                        if(!g->connectUV(u, candR[stackR[k]])) {
-                            f = false;
-                            break;
-                        }
-                    }
-                    if(f) lSize++;
-                    // if(pR - j - 1 + rSize < maxPQ - minPQ) break;
-                }
+                //     int u = candL[j];
+                //     bool f = true;
+                //     for(int k = 0; k < len; k++) {
+                //         if(!g->connectUV(u, candR[stackR[k]])) {
+                //             f = false;
+                //             break;
+                //         }
+                //     }
+                //     if(f) lSize++;
+                //     // if(pR - j - 1 + rSize < maxPQ - minPQ) break;
+                // }
 
-                for(int x = 1; x <= lSize && x < minPQ; x++) {
-                    sumCYi[x] += C[lSize][x];
-                }
-                maxZL[len] = std::max(maxZL[len], lSize);
+                // for(int x = 1; x <= lSize && x < minPQ; x++) {
+                //     sumCYi[x] += C[lSize][x];
+                // }
+                // maxZL[len] = std::max(maxZL[len], lSize);
 // printf("lr %d %d\n", lSize, rSize);
             }
 
@@ -755,29 +757,38 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
             sampleSize = std::ceil(sumWtemp / sumW[len] * T);
             // sampleSize -= noUseT;
             // if(ansAll[len].size() < pR) ansAll[len].resize((pR + 2)*2);
-// if(len == 10) printf("there2 pr:%d x_len:%d sumCXi[0]:%.2f\n", pR, len, sumCXi[0]);
-            for(int x = 0; x + len <= pR && x + len < minPQ; x++) {
-                if(sumCXi[x] < 0.5) break;
-// if(len == 10) printf("there3\n");
-                ansAll[len][len + x] += sumCXi[x] * sumWtemp / sampleSize / C[len + x][len];
-            }
 
-            for(int x = 1; x + len <= pL && x + len < minPQ; x++) {
-                if(sumCYi[x] < 0.5) break;
-                ansAll[x + len][len] += sumCYi[x] * sumWtemp / sampleSize / C[len + x - 1][len - 1];
-            }
+            if(len <= pR && len < minPQ && sumCXi[0] > 0.5)
+                ansAll[len] += sumCXi[0] * sumWtemp / sampleSize / C[len][len];
+//             for(int x = 0; x + len <= pR && x + len < minPQ; x++) {
+//                 if(sumCXi[x] < 0.5) break;
+// // if(len == 10) printf("there3\n");
+//                 ansAll[len][len + x] += sumCXi[x] * sumWtemp / sampleSize / C[len + x][len];
+//             }
+
+//             for(int x = 1; x + len <= pL && x + len < minPQ; x++) {
+//                 if(sumCYi[x] < 0.5) break;
+//                 ansAll[x + len][len] += sumCYi[x] * sumWtemp / sampleSize / C[len + x - 1][len - 1];
+//             }
 // printf("    ansAll[3][2] %.0f\n", ansAll[3][2]);
         }
     }
 edT = clock();
 printf("second dp time %f\n", (edT - stT) / CLOCKS_PER_SEC);
 
+    // for(int x = 2; x < (int)ansAll.size() && x < minPQ; x++) {
+    //     for(int y = 2; y < (int)ansAll[x].size() && y < minPQ; y++) {
+    //         if(ansAll[x][y] < 0.5) break;
+    //         printf("%d-%d: %.0f\n", x, y, ansAll[x][y]);
+    //         // fflush(stdout);
+    //     }
+    // }
     for(int x = 2; x < (int)ansAll.size() && x < minPQ; x++) {
-        for(int y = 2; y < (int)ansAll[x].size() && y < minPQ; y++) {
-            if(ansAll[x][y] < 0.5) break;
-            printf("%d-%d: %.0f\n", x, y, ansAll[x][y]);
+        // for(int y = 2; y < (int)ansAll[x].size() && y < minPQ; y++) {
+            if(ansAll[x] < 0.5) break;
+            printf("%d-%d: %.0f\n", x, x, ansAll[x]);
             // fflush(stdout);
-        }
+        // }
     }
     for(int i = 2; i < minPQ && i < maxPLen; i++) {
         printf("%d:maxZL %u maxZR %u\n", i, maxZL[i], maxZR[i]);

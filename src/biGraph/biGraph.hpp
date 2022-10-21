@@ -12,6 +12,11 @@
 
 struct biGraph {
     uint32_t n1, n2, m, maxDu, maxDv;
+    uint32_t n[2];
+    bool connect(uint32_t u, uint32_t v, int i) {
+        if(i == 0) return connectUV(u, v);
+        else return connectUV(v, u);
+    }
 
     struct Edge{
         uint32_t u, v;
@@ -45,34 +50,6 @@ printf("graph size:n1: %u n2:%u, m %u\n", n1, n2, m);fflush(stdout);
 // printf("there\n");fflush(stdout);
         // changeToCoreOrder();
         // rawOrder();
-        // changeToCoreOrderVersion2();
-        // check();
-    }
-
-    void check() {
-        uint32_t maxOutU = 0, maxOutV = 0, maxSum = 0;
-
-        for(uint32_t u = 0; u < n1; u++) {
-            for(uint32_t i = pU[u]; i < pU[u + 1]; i++) {
-                uint32_t v = e1[i];
-
-                // maxOutU = std::max(maxOutU, pU[u + 1] - i);
-                auto st = e2.begin() + pV[v];
-                auto ed = e2.begin() + pV[v + 1];
-                // maxOutV = std::max(uint32_t(ed - std::upper_bound(st, ed, u)), maxOutV);
-                maxSum = std::max(
-                    maxSum, 
-                    
-                    pU[u + 1] - i + uint32_t(ed - std::upper_bound(st, ed, u))
-                );
-                // printf("%u %u\n", pU[u + 1] - i, uint32_t(ed - std::upper_bound(st, ed, u)));
-            }
-        }
-
-        printf("maxOut: %u %u\n", maxOutU, maxOutV);
-        printf("maxD: %u %u\n", maxDu, maxDv);
-        printf("maxSum: %u\n", maxSum);
-        fflush(stdout);
     }
 
     void coreReductionFast22() {
@@ -100,7 +77,7 @@ printf("graph size:n1: %u n2:%u, m %u\n", n1, n2, m);fflush(stdout);
             uint32_t u, degU;
 
             if(!heap.pop_min(u, degU)) printf("errorLheap\n");
-            if(degU >= 3) {
+            if(degU >= 2 + 1) {
                 if(u < n1) visL[u] = true;
                 else visR[u - n1] = true;
                 
@@ -310,167 +287,6 @@ printf("graph size:n1: %u n2:%u, m %u\n", n1, n2, m);fflush(stdout);
         // }
 
         // printf("core reduction\n");
-    }
-
-    void changeToCoreOrderVersion2() {
-        std::vector<uint32_t> d1, d2;
-        
-        d1.resize(n1);
-        d2.resize(n2);
-
-        for(uint32_t i = 0; i < m; i++) {
-            ++d1[edges[i].u];
-            ++d2[edges[i].v];
-        }
-
-        maxDu = 0;
-        for(uint32_t i = 0; i < n1; i++) {
-            maxDu = std::max(maxDu, d1[i]);
-        }
-        maxDv = 0;
-        for(uint32_t i = 0; i < n2; i++) {
-            maxDv = std::max(maxDv, d2[i]);
-        }
-
-        pU[0] = 0;
-        for(uint32_t u = 0; u < n1; u++) {
-            pU[u + 1] = d1[u] + pU[u];
-        }
-        for(uint32_t i = 0; i < m; i++) {
-            e1[pU[edges[i].u]++] = edges[i].v; 
-        }
-        pU[0] = 0;
-        for(uint32_t u = 0; u < n1; u++) {
-            pU[u + 1] = d1[u] + pU[u];
-        } 
-        
-        pV[0] = 0;
-        for(uint32_t v = 0; v < n2; v++) {
-            pV[v + 1] = d2[v] + pV[v];
-        }
-        for(uint32_t i = 0; i < m; i++) {
-            e2[pV[edges[i].v]++] = edges[i].u; 
-        }
-        pV[0] = 0;
-        for(uint32_t v = 0; v < n2; v++) {
-            pV[v + 1] = d2[v] + pV[v];
-        }
-
-        ListLinearHeap lheap(n1, maxDu + 1), rheap(n2, maxDv + 1);
-        uint32_t n = std::max(n1, n2);
-        std::vector<uint32_t> ids(n);
-        std::vector<uint32_t> keys(n);
-        std::vector<uint32_t> labelsL(n1);
-        std::vector<uint32_t> labelsR(n2);
-        uint32_t l1 = 0, l2 = 0;
-
-        for(uint32_t i = 0; i < n1; i++) {
-            ids[i] = i;
-            keys[i] = d1[i] + 1;
-        }
-        lheap.init(n1, maxDu + 1, ids.data(), keys.data());
-        for(uint32_t i = 0; i < n2; i++) {
-            ids[i] = i;
-            keys[i] = d2[i] + 1;
-        }
-        rheap.init(n2, maxDv + 1, ids.data(), keys.data());
-        
-
-        // uint32_t minN = std::min(n1, n2);
-        for(uint32_t i = 0; i < n1 + n2; i++) {
-            uint32_t u, degU = n2 + 11;
-            uint32_t v, degV = n1 + 11;
-
-            if(!lheap.empty() && !lheap.pop_min(u, degU)) printf("errorLheap\n");
-            if(!rheap.empty() && !rheap.pop_min(v, degV)) printf("errorRheap\n");
-
-            if(degU <= degV) {
-                if(degV != n1 + 11)
-                    rheap.insert(v, degV + 1);
-                
-                for(uint32_t j = pU[u]; j < pU[u + 1]; j++) {
-                    rheap.decrement(e1[j]);
-                }
-                labelsL[u] = l1++;
-
-                
-            }
-            else {
-                if(degU != n2 + 11)
-                    lheap.insert(u, degU + 1);
-
-                for(uint32_t j = pV[v]; j < pV[v + 1]; j++) {
-                    lheap.decrement(e2[j]);
-                }
-                labelsR[v] = l2++;
-
-                
-            }
-        }
-
-        printf("%u %u\n", l1, l2);
-
-        // if(n1 < n2) {
-        //     for(uint32_t j = n1; j < n2; j++) {
-        //         uint32_t v, degV;
-        //         if(!rheap.pop_min(v, degV)) printf("errorRheap\n");
-        //         labelsR[v] = j;
-        //     }
-        // }
-        // else if(n1 > n2) {
-        //     for(uint32_t j = n2; j < n1; j++) {
-        //         uint32_t u, degU;
-        //         if(!lheap.pop_min(u, degU)) printf("errorRheap\n");
-        //         labelsL[u] = j;
-        //     }
-        // }
-
-    
-
-        for(uint32_t i = 0; i < m; i++) {
-            edges[i].u = labelsL[edges[i].u];
-            edges[i].v = labelsR[edges[i].v];
-        }
-
-        std::fill(d1.begin(), d1.begin() + n1, 0);
-        std::fill(d2.begin(), d2.begin() + n2, 0);
-        std::fill(pU.begin(), pU.begin() + n1 + 1, 0);
-        std::fill(pV.begin(), pV.begin() + n2 + 1, 0);
-
-        for(uint32_t i = 0; i < m; i++) {
-            ++d1[edges[i].u];
-            ++d2[edges[i].v];
-        }
-
-        for(uint32_t i = 0; i < n1; i++) {
-            pU[i + 1] = pU[i] + d1[i];
-        }
-        for(uint32_t i = 0; i < n2; i++) {
-            pV[i + 1] = pV[i] + d2[i];
-        }
-
-        for(uint32_t i = 0; i < m; i++) {
-            e1[ pU[edges[i].u]++ ] = edges[i].v;
-        }
-        for(uint32_t i = 0; i < m; i++) {
-            e2[ pV[edges[i].v]++ ] = edges[i].u;
-        }
-
-        pU[0] = pV[0] = 0;
-        for(uint32_t i = 0; i < n1; i++) {
-            pU[i + 1] = pU[i] + d1[i];
-        }
-        for(uint32_t i = 0; i < n2; i++) {
-            pV[i + 1] = pV[i] + d2[i];
-        }
-
-        for(uint32_t i = 0; i < n1; i++) {
-            std::sort(e1.begin() + pU[i], e1.begin() + pU[i + 1]);
-        }
-        for(uint32_t i = 0; i < n2; i++) {
-            std::sort(e2.begin() + pV[i], e2.begin() + pV[i + 1]);
-        }
-
     }
 
     void changeToCoreOrder() {

@@ -26,3 +26,13 @@ target_link_libraries(turan biGraph)
 
 add_library(bcAndPath bcAndPath.h bcAndPath.cpp bcAndPathV5.cpp)
 target_link_libraries(bcAndPath biGraph linearSet)
+
+add_library(colorPathPequalsQ colorPathPequalsQ.h colorPathPequalsQ.cpp colorPathAV5PequalsQ.cpp)
+target_link_libraries(colorPathPequalsQ biGraph linearSet)
+
+
+add_library(pivotAndPathPequalsQ pivotAndPathPequalsQ.h pivotAndPathPequalsQ.cpp pivotAndPathSamplev5PequalsQ.cpp)
+target_link_libraries(pivotAndPathPequalsQ biGraph linearSet)
+
+add_library(colorPathSpecificPQ colorPathSpecificPQ.h colorPathSpecificPQ.cpp)
+target_link_libraries(colorPathSpecificPQ biGraph linearSet)

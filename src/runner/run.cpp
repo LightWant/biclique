@@ -8,6 +8,9 @@
 #include "../biClique/pivotAndPath.h"
 #include "../biClique/turan.h"
 #include "../biClique/bcAndPath.h"
+#include "../biClique/colorPathPequalsQ.h"
+#include "../biClique/pivotAndPathPequalsQ.h"
+#include "../biClique/colorPathSpecificPQ.h"
 
 #include <cassert>
 #include <string>
@@ -56,7 +59,7 @@ int main(int argc, char * argv[])
 
         delete counter;
     }
-    else if(aC->exist("-pm")) {//EPIvoter
+    else if(aC->exist("-pm")) {
         rawEdgePivot * counter = new rawEdgePivot(filePath, outFilePath);
 
         auto t1 = std::chrono::steady_clock::now();
@@ -84,17 +87,17 @@ int main(int argc, char * argv[])
         std::cout << "time:" << duration.count() << "ms" << std::endl;
         delete counter;
     }
-    else if(aC->exist("-fpm")) {
-        fastEdgePivot * counter = new fastEdgePivot(filePath, outFilePath);
-        auto t1 = std::chrono::steady_clock::now();
+    // else if(aC->exist("-fpm")) {//no use delete it
+    //     fastEdgePivot * counter = new fastEdgePivot(filePath, outFilePath);
+    //     auto t1 = std::chrono::steady_clock::now();
 
-        counter->exactCountMaximalPivotFast();
+    //     counter->exactCountMaximalPivotFast();
 
-        auto t2 = std::chrono::steady_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-        std::cout << "time:" << duration.count() << "ms" << std::endl;
-        delete counter;
-    }
+    //     auto t2 = std::chrono::steady_clock::now();
+    //     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+    //     std::cout << "time:" << duration.count() << "ms" << std::endl;
+    //     delete counter;
+    // }
     else if(aC->exist("-fpmPQ")) {
         edgePivotSpecificPQ * counter = new edgePivotSpecificPQ(filePath, outFilePath, p, q);
         auto t1 = std::chrono::steady_clock::now();
@@ -120,7 +123,7 @@ int main(int argc, char * argv[])
         uint64_t T = 100000;
         if(aC->exist("-t")) T = atoll(aC->get("-t").c_str());
         // counter->approximateCountingAll(T);
-printf("herer ss\n");
+
         if(aC->exist("-v5"))
             counter->approximateCountingAllVersion5(T);
         else counter->approximateCountingAllVersion2(T);
@@ -130,7 +133,46 @@ printf("herer ss\n");
         std::cout << "time:" << duration.count() << "ms" << std::endl;
         delete counter;
     }
-    else if(aC->exist("-pp")) {
+    else if(aC->exist("-cppq")) {//pure color path, specific pq
+        colorPathSpecificPQ * counter = new colorPathSpecificPQ(filePath, outFilePath,  p, q);
+        auto t1 = std::chrono::steady_clock::now();
+        // counter->approximateCounting();
+        // counter->testSubgraphSize();
+        uint64_t T = 100000;
+        if(aC->exist("-t")) T = atoll(aC->get("-t").c_str());
+        // counter->approximateCountingAll(T);
+
+        // if(aC->exist("-v5"))
+        //     counter->approximateCountingAllVersion5(T);
+        // else
+        counter->approximateCountingAllVersion2(T);
+
+        auto t2 = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+        std::cout << "time:" << duration.count() << "ms" << std::endl;
+        delete counter;
+    }
+    else if(aC->exist("-peqq")) {//p equals q sampling, p=q<H
+        int H = 11;
+        if(aC->exist("-H")) H = atoi(aC->get("-H").c_str());
+        colorPathPequalsQ * counter = new colorPathPequalsQ(filePath, outFilePath, H, p, q);
+        auto t1 = std::chrono::steady_clock::now();
+        // counter->approximateCounting();
+        // counter->testSubgraphSize();
+        uint64_t T = 100000;
+        if(aC->exist("-t")) T = atoll(aC->get("-t").c_str());
+        // counter->approximateCountingAll(T);
+
+        if(aC->exist("-v5"))
+            counter->approximateCountingAllVersion5(T);
+        else counter->approximateCountingAllVersion2(T);
+
+        auto t2 = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+        std::cout << "time:" << duration.count() << "ms" << std::endl;
+        delete counter;
+    }
+    else if(aC->exist("-pp")) {//exact+sampling p<H,q<H
         int H = 11;
         if(aC->exist("-H")) H = atoi(aC->get("-H").c_str());
 
@@ -148,14 +190,31 @@ printf("herer ss\n");
         std::cout << "time:" << duration.count() << "ms" << std::endl;
         delete counter;
     }
+    else if(aC->exist("-pppeqq")) {//exact+sampling p=q<H
+        int H = 10;
+        if(aC->exist("-H")) H = atoi(aC->get("-H").c_str());
+
+        pivotAndPathPequalsQ * counter = new pivotAndPathPequalsQ(filePath, outFilePath, H);
+
+        auto t1 = std::chrono::steady_clock::now();
+        uint64_t T = 100000;
+        if(aC->exist("-t")) T = atoll(aC->get("-t").c_str());
+
+        if(aC->exist("-v5")) counter->countingV5(T);
+        else
+        counter->counting(T);
+
+        auto t2 = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+        std::cout << "time:" << duration.count() << "ms" << std::endl;
+        delete counter;
+    }
     else if(aC->exist("-tu")) {
         turan * counter = new turan(filePath, outFilePath, p, q);
         auto t1 = std::chrono::steady_clock::now();
         uint64_t T = 100000;
         if(aC->exist("-t")) T = atoll(aC->get("-t").c_str());
-        double rho = 0.8;
-        if(aC->exist("-rho")) rho = atof(aC->get("-rho").c_str());
-        counter->sample(T, rho);
+        counter->sample(T);
 
         auto t2 = std::chrono::steady_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);

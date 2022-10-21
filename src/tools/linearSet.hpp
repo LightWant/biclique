@@ -13,7 +13,7 @@ private:
     uint32_t sz;
 
 public:
-    LinearSet() {}
+    LinearSet() { sz = 0; }
     LinearSet(uint32_t sz_) {
         resize(sz_);
     }
@@ -65,6 +65,8 @@ public:
             }
         }
     }
+
+    uint32_t size() { return sz; }
 };
 
 #endif

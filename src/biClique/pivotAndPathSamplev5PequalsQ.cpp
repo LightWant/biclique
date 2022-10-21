@@ -1,13 +1,57 @@
-#include "colorPath.h"
+#include "pivotAndPathPequalsQ.h"
 #include <chrono>
 #include <random>
 #include <cassert>
 
-void colorPath::approximateCountingAllVersion5(uint64_t T) {
-    // g->coreReductionFast22();
+void pivotAndPathPequalsQ::countingV5(uint64_t T) {
+    printf("p=q<H v5\n");
+    std::vector<uint32_t> vs1(g->n1), vs2(g->n1);
+    vs1.clear();
+    vs2.clear();
 
-    // printf("%u %u %llu\n", g->n1, g->n2, g->m);
+    constexpr int bar = 1000;
+    std::vector<uint32_t> degs(g->n2);
+    for(uint32_t v = 0; v < g->n2; v++) {
+        degs[v] = g->deg2(v);
+    }
 
+    // uint64_t upperBoundEdgesForSampling = 0;
+    for(uint32_t u = 0; u < g->n1; u++) {
+        uint32_t sumDeg = 0;
+        for(uint32_t i = g->pU[u]; i < g->pU[u + 1]; i++) {
+            uint32_t v = g->e1[i];
+
+            --degs[v];
+            sumDeg += degs[v] * (g->pU[u + 1] - i - 1);
+        }
+        
+        if(sumDeg >= bar) {
+            vs2.push_back(u);
+            // upperBoundEdgesForSampling += g->deg1(u);
+        }
+        else vs1.push_back(u);
+    }
+
+    printf("bar %d\n", bar);
+    printf("sample size %llu\n", T);
+    // printf("upperBound %llu\n", upperBoundEdgesForSampling);
+
+    printf("exact:%u\n", (uint32_t)vs1.size());
+    printf("sample:%u\n", (uint32_t)vs2.size());
+    fflush(stdout);
+
+double t = clock();
+    if(vs1.size() > 0) pivot(vs1);
+double d = clock();
+
+printf("exact done, %.5fs\n", (d - t) / CLOCKS_PER_SEC);fflush(stdout);
+    if(vs2.size() > 0) samplev5(vs2, T);
+double e = clock();
+
+printf("appro done, %.5fs\n", (e - d) / CLOCKS_PER_SEC);fflush(stdout);
+}
+
+void pivotAndPathPequalsQ::samplev5(std::vector<uint32_t> & nodes, uint64_t T) {
     uint32_t maxDuv = std::max(g->maxDu, g->maxDv);
 
     // const int minPQ = 5;
@@ -23,14 +67,13 @@ void colorPath::approximateCountingAllVersion5(uint64_t T) {
             auto ed = g->e2.begin() + g->pV[v + 1];
             edges += ed - std::lower_bound(st, ed, u) + 1;
         }
-        maxE = std::max(maxE, edges + g->pU[u + 1] - g->pU[u]);
+        maxE = std::max(maxE, edges);
     }
     printf("maxE %u, maxDuv %u\n", maxE, maxDuv);
-    printf("g->maxDu * g->maxDv + 5: %u\n", g->maxDu * g->maxDv + 5);
     // uint32_t maxE = 105000;
 
-    candL.resize(g->n1);
-    candR.resize(g->n2);
+    // candL.resize(g->n1);
+    // candR.resize(g->n2);
     std::vector<uint32_t> candLtemp(g->maxDv);
 
     // double * bufferForDpU = new double[minPQ * maxE];
@@ -52,19 +95,19 @@ void colorPath::approximateCountingAllVersion5(uint64_t T) {
     // for(uint32_t k = 0; k < minPQ; k++) {
     //     dpV[k] = bufferForDpV + k * maxE;
     // }
-    std::vector<std::vector<double>> dpV(minPQ + 2);
+    std::vector<std::vector<double>> dpV(minPQ);
     for(uint32_t k = 0; k < minPQ; k++) dpV[k].resize(maxE);
     for(uint32_t e = 0; e < maxE; e++) {
         dpV[0][e] = 1;
     }
 
-    ansAll.resize(minPQ + 2);
-    for(uint32_t i = 0; i <= minPQ; i++) {
-        ansAll[i].resize(minPQ + 2);
-    }
+    // ansAll.resize(minPQ + 5);
+    // for(uint32_t i = 0; i <= minPQ; i++) {
+    //     ansAll[i].resize(minPQ + 5);
+    // }
 
     //(minPQ-minPQ)-bipath
-    std::vector<double> sumW(minPQ + 2);
+    std::vector<double> sumW(minPQ + 1);
     std::vector<double> ddp(maxE);
     
     //subGraph
@@ -118,8 +161,7 @@ void colorPath::approximateCountingAllVersion5(uint64_t T) {
 
                 for(auto i : nxtLayerEdgesR[v]) {
                     // int u = e2[i];
-
-                    if(dpV[k - 1][mapVtoU[i]] < 0.5) continue;
+                    // if(dpV[k - 1][mapVtoU[i]] < 0.5) continue;
 
                     ddp[pV[v]] += dpV[k - 1][mapVtoU[i]]; 
                     ddp[i] -= dpV[k - 1][mapVtoU[i]];
@@ -131,7 +173,7 @@ void colorPath::approximateCountingAllVersion5(uint64_t T) {
                     nxtLayerEdgesL[e2[pV[v]]].push_back(mapVtoU[pV[v]]);
                     // assert(e2[pV[v]] < pL);
                 }
-
+                    
                 // for(int e = pV[v] + 1; e < pV[v + 1]; e++) {
                 for(int e = pV[v] + 1; e < pV[v + 1]; e++) {
                     dpU[k][e] = dpU[k][e - 1] + ddp[e];
@@ -141,8 +183,9 @@ void colorPath::approximateCountingAllVersion5(uint64_t T) {
 // if(e2[e] >= pL) {
 //     printf("%d %d %d\n", e, e2[e], pL);fflush(stdout);
 // }
-                        // assert(e2[e] < pL);
+                        assert(e2[e] < pL);
                     }
+                        
                 }
                 // for(int e = lastEdge + 1; e < pV[v + 1]; e++) dpU[k][e] = 0;
 
@@ -207,99 +250,20 @@ void colorPath::approximateCountingAllVersion5(uint64_t T) {
         return k;
     };
 // g->print();
-    auto computeDP3 = [&](int pL, int pR) {
-        for(int u = 0; u < pL; u++) {
-            for(int i = pU[u]; i < pU[u + 1]; i++) {
-                dpV[1][i] = pU[u + 1] - i - 1;
-            }
-        }
-
-        int minLR = std::min(pL, pR);
-        int k = 2;
-        for(; k <= minLR && k < minPQ; k++) {
-            // bool f = false;
-            // memset(dpU[k], 0, sizeof(double) * pU[pL]);
-
-            std::fill(ddp.begin(), ddp.begin() + pU[pL], 0);
-            for(int v = 0; v < pR; v++) {
-                for(int i = pV[v] + 1; i < pV[v + 1]; i++) {
-                    int u = e2[i];
-                    if(dpV[k - 1][mapVtoU[i]] == 0) continue;
-
-                    ddp[pV[v]] += dpV[k - 1][mapVtoU[i]]; 
-                    ddp[i] -= dpV[k - 1][mapVtoU[i]];
-                    // ddp[pU[u]] += dpV[k - 1][i];
-                    // int ed = std::lower_bound(e1.begin() + pU[u], 
-                    //     e1.begin() + pU[u + 1], v) - e1.begin();
-                    // ddp[ed] -= dpV[k - 1][i];
-                    // for(int j = pU[u]; e1[j] != v; j++) {
-                    //     dpU[k][j] += dpV[k - 1][i];
-                    // }
-                }
-            }
-            for(int v = 0; v < pR; v++) {
-                dpU[k][pV[v]] = ddp[pV[v]] < 0 ? 0 : ddp[pV[v]];
-                // if(dpU[k][pV[v]] < 0) dpU[k][pV[v]] = 0;
-    // assert(dpU[k][pV[v]] >= -1);
-                for(int e = pV[v] + 1; e < pV[v + 1]; e++) {
-                    dpU[k][e] = dpU[k][e-1] + ddp[e];
-    // assert(dpU[k][e] >= -1);
-                    // if(dpU[k][e] < 0) dpU[k][e] = 0;
-                }
-            }
-
-            std::fill(ddp.begin(), ddp.begin() + pU[pL], 0);
-            // memset(dpV[k], 0, sizeof(double) * pU[pL]);
-            for(int u = 0; u < pL; u++) {
-                for(int i = pU[u] + 1; i < pU[u + 1]; i++) {
-                    int v = e1[i];
-
-                    ddp[pU[u]] += dpU[k][mapUtoV[i]];
-                    ddp[i] -= dpU[k][mapUtoV[i]];
-
-                    // int j = std::lower_bound(e2.begin() + pV[v], 
-                    //     e2.begin() + pV[v + 1], u) - e2.begin();
-
-                    // ddp[pV[v]] += dpU[k][i];
-                    // ddp[j] -= dpU[k][i];
-
-                    // for(int j = pV[v]; e2[j] != u; j++) {
-                    //     dpV[k][j] += dpU[k][i];
-                    // }
-                }
-            }
-            for(int u = 0; u < pL; u++) {
-                dpV[k][pU[u]] = ddp[pU[u]] < 0? 0 : ddp[pU[u]];
-// if(dpV[k][pU[u]] < -1) {
-//     printf("dpV:%.2f\n", dpV[k][pU[u]]);
-//     fflush(stdout);
-// }
-// assert(dpV[k][pU[u]] >= -1);
-                for(int e = pU[u] + 1; e < pU[u + 1]; e++) {
-                    dpV[k][e] = dpV[k][e-1] + ddp[e];
-                    // if(dpV[k][e] < 0) dpV[k][e] = 0;
-// assert(dpV[k][e] >= -1);
-                }
-            }
-        }
-
-        return k;
-    };
 
    
 double stT = clock();
     int maxPLen = 0;
-    for(uint32_t u = 0; u < g->n1; u++) {
+    for(auto u : nodes) {
 // if(u % 1000 == 0) {
 // printf("    nodes %u\n", u);fflush(stdout);
-// }       
-        if(g->deg1(u) <= 1) continue;
+// }
         int pR = 0;
         for(uint32_t i = g->pU[u]; i < g->pU[u + 1]; i++) {
             uint32_t v = g->e1[i];
             candR.changeTo(v, pR++);
         }
-        // if(pR < 2) continue;
+        if(pR < 2) continue;
 
         candLtemp.clear();
         for(uint32_t i = g->pU[u]; i < g->pU[u + 1]; i++) {
@@ -406,7 +370,7 @@ assert(pU[pL] < maxE);
         }
     }
 double edT = clock();
-printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
+printf("first dp time %f\n", (edT - stT) / CLOCKS_PER_SEC);
 // printf("%d %d %d\n", aa, bb, cc);
 // return ;
     printf("maxPlen %d\n\nsumW ",  maxPLen);
@@ -419,12 +383,12 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
     std::default_random_engine generator(rd());
     std::uniform_real_distribution<double> uiDistribution(0, 1);
     std::vector<int> stackL(minPQ + 5), stackR(minPQ + 5);
-    std::vector<double> sumCXi(g->maxDu + 5), sumCYi(g->n1 + 5);
+    std::vector<double> sumCXi(g->maxDu + 5), sumCYi(g->n1 + 1);
 
     std::vector<int> maxZL(g->maxDu + 1), maxZR(g->maxDv + 1);
 
     // if(sumW > 0)
-    for(uint32_t u = 0; u < g->n1; u++) {
+    for(auto u : nodes) {
 // if(u > 106000) {
 //     printf("u:%u\n", u);fflush(stdout);
 // }
@@ -519,7 +483,6 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
 // }
 // printf("%u, %d %d ", u, pL, pR);
         int maxPLength = computeDP(pL, pR);
-
 // printf("\n dpU: \n");
 // for(int u = 0; u < pL; u++)
 // for(int j = pU[u]; j < pU[u + 1]; j++) {
@@ -541,8 +504,6 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
 // fflush(stdout);
 
         for(int len = 2; len < maxPLength && len <= minPQ && sumW[len] > 0.5; len++) {//(len-len)-bipath
-// if(len == 10) printf("there\n");
-            
             double sumWtemp = 0.0;
             for(int j = pU[0]; j < pU[1]; j++) {
                 sumWtemp += dpU[len][mapUtoV[j]];
@@ -552,11 +513,9 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
 
             if(sampleSize == 0) continue;
 
-            std::fill(sumCXi.begin(), sumCXi.begin() + pR + 2, 0.0);
-            std::fill(sumCYi.begin(), sumCYi.begin() + pL + 2, 0.0);
-
-            bool hit = false;
-            // uint32_t noUseT = 0;
+            sumCXi[0] = 0.0;
+            // std::fill(sumCXi.begin(), sumCXi.begin() + pR + 1, 0.0);
+            // std::fill(sumCYi.begin(), sumCYi.begin() + pL + 1, 0.0);
 // printf("len %d: sumW:%.0f spSize:%llu\n", len, sumWtemp, sampleSize);
             while(sampleSize--) {
                 double tmp = 0.0;
@@ -596,7 +555,6 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
                     auto st = e2.begin() + pV[preV];
                     auto ed = e2.begin() + pV[preV + 1];
                     int j = std::upper_bound(st, ed, preU) - e2.begin();
-                    assert(e2[j - 1] == preU);
                     for(; j < pV[preV + 1]; j++) {
                         tmp += dpV[len - i][mapVtoU[j]];
                         if(tmp + 1e-8 >= r * dpU[len - i + 1][mapUtoV[preE]]) {
@@ -607,24 +565,6 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
                             break;
                         }
                     }
-                    // if(stackL.size() <= i) {
-                    //     // printf("%f %f %f %f\n ", tmp, r, dpU[len - i + 1][mapUtoV[preE]], r*dpU[len - i + 1][mapUtoV[preE]]);
-                    //     // j = std::upper_bound(st, ed, preU) - e2.begin();
-                    //     // assert(e2[j - 1] == preU);
-                    //     // double tt = 0;
-                    //     // while(j < pV[preV + 1]) {
-                    //     //     tt += dpV[len - i][mapVtoU[j]];
-                    //     //     // printf("%f\n", dpV[len - i][mapVtoU[j]]);
-                    //     //     j++; 
-                    //     // }
-                    //     // printf("u %u, %d %d %d\n", u, ed - st, len - i + 1, preE);
-                    //     // j = pV[preV + 1] - 1;
-                    //     // int u = e2[j];
-                    //     // stackL.push_back(u);
-                    //     // preU = u;
-                    //     // preE = j;
-                    //     break;
-                    // }
 
                     r = uiDistribution(generator);
                     tmp = 0.0;
@@ -642,39 +582,24 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
                             break;
                         }
                     }
-
-                    // assert(stackR.size() == i + 1);
                 }
 
                 if(stackL.size() < len) {
-                    // noUseT++;
-                    continue;
-                }
-                if(stackR.size() < len) {
                     continue;
                 }
                 assert(stackL.size() == len);
-                assert(stackR.size() == len);
 // printf("candL:");
 // for(int i = 0; i < len; i++) printf("%d ", candL[stackL[i]]);
 // printf("  ");
 // printf("candR:");
 // for(int i = 0; i < len; i++) printf("%d ", candR[stackR[i]]);
 // printf("\n");
-// if(len == 10) {
-//     printf("there3\n");fflush(stdout);
-// }
+
                 bool connect = true;
                 for(int i = 0; i < len; i++) {
                     for(int j = 0; j < len; j++) {
-                        if(i == j) {
-                            // assert(g->connectUV(candL[stackL[i]], candR[stackR[j]]));
-                            continue;
-                        }
-                        if(i > 0 && i == j + 1) {
-                            // assert(g->connectUV(candL[stackL[i]], candR[stackR[j]]));
-                            continue; 
-                        }
+                        if(i == j) continue;
+                        if(i > 0 && i == j + 1) continue; 
 
                         if(!g->connectUV(candL[stackL[i]], candR[stackR[j]])) {
                             connect = false;
@@ -684,10 +609,7 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
                     if(!connect) break;
                 }
                 if(!connect) continue;
-                hit = true;
-// if(len == 10) {
-//     printf("there33\n");fflush(stdout);
-// }
+
                 int rSize = 0, kk = 0;
                 for(int j = 0; j < pR; j++) {
                     int v = candR[j];
@@ -707,41 +629,38 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
                     // if(pR - j - 1 + rSize < maxPQ - minPQ) break;
                 }
 
-                for(int x = 0; x <= rSize && x < minPQ; x++) {
-                    sumCXi[x] += C[rSize][x];
-                }
-                maxZR[len] = std::max(maxZR[len], rSize);
-// if(len == 10) {
-//     printf("there1\n");fflush(stdout);
-// }
-                int lSize = 0;
-                kk = 0;
-                for(int j = 0; j < pL; j++) {
-                    if(kk < len && stackL[kk] == j) {
-                        kk++;
-                        continue;
-                    }
+                sumCXi[0] += C[rSize][0];
+                // for(int x = 0; x <= rSize && x < minPQ; x++) {
+                //     sumCXi[x] += C[rSize][x];
+                // }
+                // maxZR[len] = std::max(maxZR[len], rSize);
 
-                    int u = candL[j];
-                    bool f = true;
-                    for(int k = 0; k < len; k++) {
-                        if(!g->connectUV(u, candR[stackR[k]])) {
-                            f = false;
-                            break;
-                        }
-                    }
-                    if(f) lSize++;
-                    // if(pR - j - 1 + rSize < maxPQ - minPQ) break;
-                }
+                // int lSize = 0;
+                // kk = 0;
+                // for(int j = 0; j < pL; j++) {
+                //     if(kk < len && stackL[kk] == j) {
+                //         kk++;
+                //         continue;
+                //     }
 
-                for(int x = 1; x <= lSize && x < minPQ; x++) {
-                    sumCYi[x] += C[lSize][x];
-                }
-                maxZL[len] = std::max(maxZL[len], lSize);
+                //     int u = candL[j];
+                //     bool f = true;
+                //     for(int k = 0; k < len; k++) {
+                //         if(!g->connectUV(u, candR[stackR[k]])) {
+                //             f = false;
+                //             break;
+                //         }
+                //     }
+                //     if(f) lSize++;
+                //     // if(pR - j - 1 + rSize < maxPQ - minPQ) break;
+                // }
+
+                // for(int x = 1; x <= lSize && x < minPQ; x++) {
+                //     sumCYi[x] += C[lSize][x];
+                // }
+                // maxZL[len] = std::max(maxZL[len], lSize);
 // printf("lr %d %d\n", lSize, rSize);
             }
-
-            if(!hit) continue;
 
 // for(int i = 0; i <= pR - (len-1); i++) {
 //     printf("%.0f ", sumCXi[i]);
@@ -753,121 +672,38 @@ printf("first dp time 2hop %f\n", (edT - stT) / CLOCKS_PER_SEC);
 // printf("CY\n");
 
             sampleSize = std::ceil(sumWtemp / sumW[len] * T);
-            // sampleSize -= noUseT;
             // if(ansAll[len].size() < pR) ansAll[len].resize((pR + 2)*2);
-// if(len == 10) printf("there2 pr:%d x_len:%d sumCXi[0]:%.2f\n", pR, len, sumCXi[0]);
-            for(int x = 0; x + len <= pR && x + len < minPQ; x++) {
-                if(sumCXi[x] < 0.5) break;
-// if(len == 10) printf("there3\n");
-                ansAll[len][len + x] += sumCXi[x] * sumWtemp / sampleSize / C[len + x][len];
-            }
+            if(len <= pR && len < minPQ && sumCXi[0] > 0.5)
+                ansAll[len] += sumCXi[0] * sumWtemp / sampleSize / C[len][len];
+            // for(int x = 0; x + len <= pR && x + len < minPQ; x++) {
+            //     if(sumCXi[x] < 0.5) break;
+            //     ansAll[len][len + x] += sumCXi[x] * sumWtemp / sampleSize / C[len + x][len];
+            // }
 
-            for(int x = 1; x + len <= pL && x + len < minPQ; x++) {
-                if(sumCYi[x] < 0.5) break;
-                ansAll[x + len][len] += sumCYi[x] * sumWtemp / sampleSize / C[len + x - 1][len - 1];
-            }
+            // for(int x = 1; x + len <= pL && x + len < minPQ; x++) {
+            //     if(sumCYi[x] < 0.5) break;
+            //     ansAll[x + len][len] += sumCYi[x] * sumWtemp / sampleSize / C[len + x - 1][len - 1];
+            // }
 // printf("    ansAll[3][2] %.0f\n", ansAll[3][2]);
         }
     }
 edT = clock();
 printf("second dp time %f\n", (edT - stT) / CLOCKS_PER_SEC);
 
+    // for(int x = 2; x < (int)ansAll.size() && x < minPQ; x++) {
+    //     for(int y = 2; y < (int)ansAll[x].size() && y < minPQ; y++) {
+    //         if(ansAll[x][y] < 0.5) break;
+    //         printf("%d-%d: %.0f\n", x, y, ansAll[x][y]);
+    //     }
+    // }
     for(int x = 2; x < (int)ansAll.size() && x < minPQ; x++) {
-        for(int y = 2; y < (int)ansAll[x].size() && y < minPQ; y++) {
-            if(ansAll[x][y] < 0.5) break;
-            printf("%d-%d: %.0f\n", x, y, ansAll[x][y]);
-            // fflush(stdout);
-        }
+        if(ansAll[x] < 0.5) break;
+            printf("%d-%d: %.0f\n", x, x, ansAll[x]);
     }
     for(int i = 2; i < minPQ && i < maxPLen; i++) {
         printf("%d:maxZL %u maxZR %u\n", i, maxZL[i], maxZR[i]);
     }
-    // printf("%d-%d: %.0f\n", 10, 10, ansAll[10][10]);
     printf("ed\n");
     fflush(stdout);
 
-    // delete [] dpU;
-    // delete [] dpV;
-    // delete [] bufferForDpU;
-    // delete [] bufferForDpV;
 }
-
-
-//  auto computeDP2 = [&](int pL, int pR) {
-//         for(int u = 0; u < pL; u++) {
-//             for(int i = pU[u]; i < pU[u + 1]; i++) {
-//                 dpV[1][i] = pU[u + 1] - i - 1;
-//             }
-//         }
-
-//         int minLR = std::min(pL, pR);
-//         int k = 2;
-//         for(; k <= minLR && k < minPQ; k++) {
-//             // bool f = false;
-//             // memset(dpU[k], 0, sizeof(double) * pU[pL]);
-
-//             std::fill(ddp.begin(), ddp.begin() + pU[pL], 0);
-//             for(int v = 0; v < pR; v++) {
-//                 for(int i = pV[v] + 1; i < pV[v + 1]; i++) {
-//                     int u = e2[i];
-//                     if(dpV[k - 1][mapVtoU[i]] == 0) continue;
-
-//                     ddp[pV[v]] += dpV[k - 1][mapVtoU[i]]; 
-//                     ddp[i] -= dpV[k - 1][mapVtoU[i]];
-//                     // ddp[pU[u]] += dpV[k - 1][i];
-//                     // int ed = std::lower_bound(e1.begin() + pU[u], 
-//                     //     e1.begin() + pU[u + 1], v) - e1.begin();
-//                     // ddp[ed] -= dpV[k - 1][i];
-//                     // for(int j = pU[u]; e1[j] != v; j++) {
-//                     //     dpU[k][j] += dpV[k - 1][i];
-//                     // }
-//                 }
-//             }
-//             for(int v = 0; v < pR; v++) {
-//                 dpU[k][pV[v]] = ddp[pV[v]] < 0 ? 0 : ddp[pV[v]];
-//                 // if(dpU[k][pV[v]] < 0) dpU[k][pV[v]] = 0;
-//     // assert(dpU[k][pV[v]] >= -1);
-//                 for(int e = pV[v] + 1; e < pV[v + 1]; e++) {
-//                     dpU[k][e] = dpU[k][e-1] + ddp[e];
-//     // assert(dpU[k][e] >= -1);
-//                     // if(dpU[k][e] < 0) dpU[k][e] = 0;
-//                 }
-//             }
-
-//             std::fill(ddp.begin(), ddp.begin() + pU[pL], 0);
-//             // memset(dpV[k], 0, sizeof(double) * pU[pL]);
-//             for(int u = 0; u < pL; u++) {
-//                 for(int i = pU[u] + 1; i < pU[u + 1]; i++) {
-//                     int v = e1[i];
-
-//                     ddp[pU[u]] += dpU[k][mapUtoV[i]];
-//                     ddp[i] -= dpU[k][mapUtoV[i]];
-
-//                     // int j = std::lower_bound(e2.begin() + pV[v], 
-//                     //     e2.begin() + pV[v + 1], u) - e2.begin();
-
-//                     // ddp[pV[v]] += dpU[k][i];
-//                     // ddp[j] -= dpU[k][i];
-
-//                     // for(int j = pV[v]; e2[j] != u; j++) {
-//                     //     dpV[k][j] += dpU[k][i];
-//                     // }
-//                 }
-//             }
-//             for(int u = 0; u < pL; u++) {
-//                 dpV[k][pU[u]] = ddp[pU[u]] < 0? 0 : ddp[pU[u]];
-// // if(dpV[k][pU[u]] < -1) {
-// //     printf("dpV:%.2f\n", dpV[k][pU[u]]);
-// //     fflush(stdout);
-// // }
-// // assert(dpV[k][pU[u]] >= -1);
-//                 for(int e = pU[u] + 1; e < pU[u + 1]; e++) {
-//                     dpV[k][e] = dpV[k][e-1] + ddp[e];
-//                     // if(dpV[k][e] < 0) dpV[k][e] = 0;
-// // assert(dpV[k][e] >= -1);
-//                 }
-//             }
-//         }
-
-//         return k;
-//     };
