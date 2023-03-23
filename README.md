@@ -1,3 +1,5 @@
+# This is the source code of "Efficient Biclique Counting in Large Bipartite Graphs, SIGMOD_2023" by Xiaowei Ye
+
 EPivoter:
 ./run -f datafile -pm
 
