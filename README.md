@@ -1,19 +1,19 @@
 # This is the source code of "Efficient Biclique Counting in Large Bipartite Graphs, SIGMOD_2023" by Xiaowei Ye
 
 EPivoter:
-./run -f datafile -pm
+./bin/run -f datafile -pm
 
 Zigzag
-./run -f datafile -cp -t 100000
+./bin/run -f datafile -cp -t 100000
 
 Zigzag++
-./run -f datafile -cp -t 100000 -v5
+./bin/run -f datafile -cp -t 100000 -v5
 
 EP/Zigzag
-./run -f datafile -pp -t 100000
+./bin/run -f datafile -pp -t 100000
 
 EP/Zigzag++
-./run -f datafile -pp -t 100000 -v5
+./bin/run -f datafile -pp -t 100000 -v5
 
 Other usage details is in the run.cpp.
 
