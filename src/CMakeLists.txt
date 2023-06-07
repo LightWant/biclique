@@ -4,6 +4,7 @@ project(run)
 
 SET(CMAKE_CXX_COMPILER "g++")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -march=native -mavx -O3")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 set(exName1 "run")
 set(exName2 "densest")
@@ -42,10 +43,10 @@ target_link_libraries(${exName3} biGraph)
 target_link_libraries(${exName3} exactFlowAlgorithm)
 
 
-set(binPath "./bin")
-ADD_CUSTOM_COMMAND(TARGET ${exName1} ${exName2} ${exName3}
-          POST_BUILD
-          COMMAND ${CMAKE_COMMAND} -E make_directory ${binPath}
-          COMMAND ${CMAKE_COMMAND} -E copy ${exName1} ${binPath}/.
-          COMMAND ${CMAKE_COMMAND} -E copy ${exName2} ${binPath}/.
-)
+# set(binPath "./bin")
+# ADD_CUSTOM_COMMAND(TARGET ${exName1} ${exName2} ${exName3}
+#           POST_BUILD
+#           COMMAND ${CMAKE_COMMAND} -E make_directory ${binPath}
+#           COMMAND ${CMAKE_COMMAND} -E copy ${exName1} ${binPath}/
+#           COMMAND ${CMAKE_COMMAND} -E copy ${exName2} ${binPath}/
+# )

@@ -5,6 +5,7 @@
 #include "../tools/linearSet.hpp"
 
 #include <chrono>
+#include <random>
 
 class bcAndPath {
 private:
